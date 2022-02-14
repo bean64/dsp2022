@@ -1,0 +1,12 @@
+Thread A:
+plays sound every N seconds, records time sound last played
+
+Thread B: scans FFT feed until loud sound is detected, either records latency
+or spits stuff out into the screen buffer and calls display function
+
+Issues:
+1 - multipathing?
+2 - high frequency detection?
+3 - reliability of FFT / detection method?
+4 - ethical concerns w/r/t hearing damage and children
+5 - software architecture - parallel threads with interrupts or spin eternally?

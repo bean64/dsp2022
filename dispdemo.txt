@@ -1,0 +1,24 @@
+21:36:01    Latency: 3ms  TOF L = 5ms  TOF R = 7ms   Freq = 22khz
+
+
+
+                                
+
+
+
+                        ▀
+
+
+
+
+
+
+
+
+
+
+
+
+    [L]                                                                  [R]   
+
+DistL = 1.75m DistR= 2.45m Xpos = 0.3m Rpos = 2.08m

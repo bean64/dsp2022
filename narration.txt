@@ -1,0 +1,41 @@
+In order to create an immersive virtual reality experience, it is required as
+a baseline by systems such as steamvr that the player's head and hands are
+both tracked in 3d space, as well as tracking rotation using gyro sensors.
+I'm not going to go into too much detail about how the hardware works, but
+all you need to know for now is that it's expensive and gets precision down to
+about a milimeter, with sample rates around 60hz. Using the internal IMU,
+sample rates can be increased to the kilohertz range.
+
+This is sufficient for most applications, since the 6dof tracking on the head 
+can prevent motion sickness and the same allows you to interact very naturally
+with objects.
+
+However, in some situations we want to have our character possess a body, 
+in order that other people can shoot at it, or for various other reasons.
+
+Elbows are not tracked in most current systems, and interpolating them from
+hand position and rotation is not necessarily very accurate, but works in 
+the vast majority of cases. 
+
+The chest and lower body can also be estimated, but this is more often
+a problem than with elbows. You can see here why estimating foot position
+may be difficult.
+
+Unfortunately, additional trackers for steamvr are very expensive. If your
+headset uses inside-out tracking, you will need to buy base stations as well.
+
+The priority for tracking goes as follows: 
+Head, Hands, Feet, Hips, elbows/knees. To fully track someone you'll also want
+finger tracking, which like most of these is outside the scope of this project.
+Bonus points for facial tracking, which is I'm sure something Meta 
+are interested in.
+
+
+For this project, what I want to do is determine the feasibility of tracking
+feet in 2d space (along the floor, so no vertical movement) using inexpensive
+microphones and external audio cards. 
+
+To do this requires measuring distances between a microphone and two fixed
+points. For the first prototype, I'll only want to track one microphone in 
+relation to from one point. The second prototype will involve tracking it from
+two points, and this along with some simple trigonometry will let me 
