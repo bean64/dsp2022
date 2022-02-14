@@ -1,0 +1,16 @@
+Position of S1: 0,0
+Position of S2: b,0
+
+Distance to S1: c
+Distance to S2: a
+
+Angle CAB = acos((b²+c²-a²)/(2bc))
+
+Angle ADB = 90
+(ADB is a right triangle) 
+
+c sin CAB = y
+c cos CAB = x
+
+x = sin(acos((b²+c²-a²)/(2bc)))
+y = ((b²+c²-a²)/(2bc))
