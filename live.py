@@ -28,7 +28,7 @@ with default_mic.recorder(samplerate=44100,blocksize=44100,channels=[0]) as mic,
     #buffer = mic.record(numframes=spb)
     data = mic.record(numframes=spb)
     first = True
-    ecount = 0
+   #ecount = 0
     print ("Waiting for sync...")
     scanstart= 0
     scanend = spb - 32
@@ -36,37 +36,41 @@ with default_mic.recorder(samplerate=44100,blocksize=44100,channels=[0]) as mic,
         starttime = time.perf_counter()
         #for startpoint in range (0,spb-32):
         for startpoint in range (scanstart,scanend):
+            #count = count + 1
             endpoint = startpoint + 32
             sliced_data = data[startpoint:endpoint]
             signal = energy(1000,sliced_data,44100)[0]
             #noisiness = np.average(np.absolute(sliced_data))
             #ssnr = signal / noisiness
-            if (signal > 0.01):
+            if (signal > 0.01): # signal > 0.01 or ssnr > 
                 #lspings = lspings + 
                 #print (startpoint,endpoint, signal)
                 if first:
                     fsp = startpoint
-                    scanstart = fsp - 1024
+                    scanstart = fsp - 1024 # fixme!
                     scanend = fsp + 1024
                     print ("Sync get!", fsp,"samples!")
                     print ("Resetting scan area to",scanstart, "to", scanend)
                     first = False
                 else:
                     delta = startpoint - fsp
+                    #oldpos = position
                     position = delta * (mach/44100)
+                    #change = (position - oldposition)
                     if position > 10:
-                        ecount = ecount + 1
+                        #ecount = ecount + 1
                         print (str(round(position,2)).rjust(7),str(delta).rjust(7))
                     elif position < 0:
-                        ecount = ecount + 1
+                        #ecount = ecount + 1
                         print (str(round(position,2)).rjust(7),str(delta).rjust(7))
                     else:
-                        ecount = 0
+                        #ecount = 0
                         blok = " " * int(position*10) + "X"
                         print (str(round(position,2)).rjust(7),str(delta).rjust(7),blok) #str(round(time.time(),2)).rjust(6)
                 if startpoint == 0: # this is very scuffed, yes! the alternative caused a memory leak. Too bad!
                     print ("Sync ERROR! Please restart")
                     print ("Check audio levels?")
+                    print ("Mic gain may be too high or background too noisy")
                     sys.exit()                
                 break
             
