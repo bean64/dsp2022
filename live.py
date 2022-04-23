@@ -6,7 +6,7 @@ import soundfile as sf
 import sys
 beep, samplerate = sf.read('kilobeep.wav') 
 
-mach = 320
+c = 320
 
 # soundcard is a wrapper for pulseaudio and i am using some of their default code
 
@@ -55,7 +55,7 @@ with default_mic.recorder(samplerate=44100,blocksize=44100,channels=[0]) as mic,
                 else:
                     delta = startpoint - fsp
                     #oldpos = position
-                    position = delta * (mach/44100)
+                    position = delta * (c/44100)
                     #change = (position - oldposition)
                     if position > 10:
                         #ecount = ecount + 1
