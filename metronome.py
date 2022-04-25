@@ -18,10 +18,9 @@ with default_speaker.player(samplerate=samplerate,blocksize=samplerate) as sp:
     for x in range (0,60):
         tstart = time.time()
         sp.play(data)
-    
         tstop = time.time()
         print (tstop - tstart)
-        time.sleep(1.01)
+        #time.sleep(1.01)
         #print ("finished") 
 
 
