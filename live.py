@@ -6,7 +6,8 @@ import soundfile as sf
 import sys
 beep, samplerate = sf.read('kilobeep.wav') 
 
-c = 320
+freq = 18000
+c = 347
 
 # soundcard is a wrapper for pulseaudio and i am using some of their default code
 
@@ -17,7 +18,7 @@ print(default_speaker)
 print(default_mic)
 spb = 44100 # samples to pull from soundcard at a time
 
-def energy(freq,data,rate): # and you would not believe how long it took to nail this down
+def energy(freq,data,rate): #
     rate = 44100
     fft_out = fft(data)[0:len(data)//2]
     scaling_factor = len(data) / rate
@@ -29,7 +30,7 @@ with default_mic.recorder(samplerate=44100,blocksize=44100,channels=[0]) as mic,
     data = mic.record(numframes=spb)
     first = True
    #ecount = 0
-    print ("Waiting for sync...")
+    print ("Waiting for sync, target freq is",freq,"Hz")
     scanstart= 0
     scanend = spb - 32
     while True:
@@ -39,10 +40,11 @@ with default_mic.recorder(samplerate=44100,blocksize=44100,channels=[0]) as mic,
             #count = count + 1
             endpoint = startpoint + 32
             sliced_data = data[startpoint:endpoint]
-            signal = energy(1000,sliced_data,44100)[0]
+            signal = energy(freq,sliced_data,44100)[0]
             #noisiness = np.average(np.absolute(sliced_data))
             #ssnr = signal / noisiness
-            if (signal > 0.01): # signal > 0.01 or ssnr > 
+            if (signal > 0.01): # signal > 0.01 or ssnr >
+                #print (ssnr)
                 #lspings = lspings + 
                 #print (startpoint,endpoint, signal)
                 if first:
@@ -57,12 +59,14 @@ with default_mic.recorder(samplerate=44100,blocksize=44100,channels=[0]) as mic,
                     #oldpos = position
                     position = delta * (c/44100)
                     #change = (position - oldposition)
-                    if position > 10:
+                    if position > 3:
                         #ecount = ecount + 1
-                        print (str(round(position,2)).rjust(7),str(delta).rjust(7))
+                        pass
+                        #print (str(round(position,2)).rjust(7),str(delta).rjust(7))
                     elif position < 0:
+                        pass
                         #ecount = ecount + 1
-                        print (str(round(position,2)).rjust(7),str(delta).rjust(7))
+                        #print (str(round(position,2)).rjust(7),str(delta).rjust(7))
                     else:
                         #ecount = 0
                         blok = " " * int(position*10) + "X"
